@@ -4,11 +4,13 @@ Cool
 """
 import transformations
 
-word = raw_input("type in the semtence you want to intonate\nword: ")
+word = raw_input("type in the sentence you want to intonate\nword: ")
+
+eng_to_readablechars = transformations.all_accent_transformations()
 
 letters = list(word)
 letters_in_TCHSET = map(lambda x : "ENG_"+ x, letters)
-possibilities_in_TCHSET = map(lambda x: transformations.transformations[x], letters_in_TCHSET)
+possibilities_in_TCHSET = map(lambda x: eng_to_readablechars[x], letters_in_TCHSET)
 print possibilities_in_TCHSET
 
 #print letters_in_TCHSET

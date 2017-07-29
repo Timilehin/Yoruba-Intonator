@@ -1,4 +1,4 @@
-char_to_unicode = {
+readable_char_to_unicode = {
 	"a_do": "00E0",
 	"a_re": "0061",
 	"a_mi": "00E1",

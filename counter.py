@@ -10,10 +10,10 @@ class Counter:
 		self.bases = bases
 		self.num_digits = num_digits
 
-	def can_increment():
+	def can_increment(self):
 		return self.num_increments <= self.max_increments
 
-	def increment():
+	def increment(self):
 		assert can_increment()
 
 		for i in range(1, self.num_digits+1):
@@ -28,7 +28,7 @@ class Counter:
 
 		self.num_increments += 1
 
-	def get_curr_value():
+	def get_curr_value(self):
 		return self.value
 
 c = Counter(1, [2,])
