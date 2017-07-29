@@ -1,0 +1,5 @@
+Next steps 
+1. Make the dictionary
+2. Make the filtering steps an procedures
+3. make the probability distribution thingy 
+4. pick the best and return. 
