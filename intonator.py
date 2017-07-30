@@ -39,4 +39,4 @@ while possibility_counter.can_increment():
 	all_possibilities.append(generate_word(selection_number))
 
 
-print all_possibilities
+print len(all_possibilities)
