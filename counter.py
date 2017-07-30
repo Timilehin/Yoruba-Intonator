@@ -25,29 +25,41 @@ class Counter:
 		if curr < self.bases[-i]-1:
 			curr += 1
 			self.value[-i] = str(curr)
-			print "1value is now" + str(self.value)
+			#print "1value is now" + str(self.value)
 			self.num_increments += 1
 			return
 
 		#Carry case
 		self.value[-i] = "0"
-		print "2value is now" + str(self.value)
+		#print "2value is now" + str(self.value)
 		i+=1
 		pos = i 
 		while self.value[-pos] == self.bases[-pos] -1:
 			pos += 1
 		self.value[-pos] = str(int(self.value[-pos])+1)
-		print "3value is now" + str(self.value)
+		#print "3value is now" + str(self.value)
 		self.num_increments += 1
 		return
 
 	def get_curr_value(self, ):
-		return str(self.value)
+		return "".join(self.value)
 
 c = Counter(2, [2,3,])
-print c.get_curr_value()
-while c.can_increment():
-	c.increment()
-	print c.get_curr_value()
-print "~~"
-print c.max_increments
+assert c.get_curr_value() == "00"
+assert c.can_increment()
+c.increment()
+assert c.get_curr_value() == "01"
+assert c.can_increment()
+c.increment()
+assert c.get_curr_value() == "02"
+assert c.can_increment()
+c.increment()
+assert c.get_curr_value() == "10"
+assert c.can_increment()
+c.increment()
+assert c.get_curr_value() == "11"
+assert c.can_increment()
+c.increment()
+assert c.get_curr_value() == "12"
+assert not c.can_increment()
+print "ALL TESTS PASS"
