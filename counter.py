@@ -34,7 +34,7 @@ class Counter:
 		#print "2value is now" + str(self.value)
 		i+=1
 		pos = i 
-		while self.value[-pos] == self.bases[-pos] -1:
+		while int(self.value[-pos]) == int(self.bases[-pos]) -1:
 			pos += 1
 		self.value[-pos] = str(int(self.value[-pos])+1)
 		#print "3value is now" + str(self.value)
@@ -43,23 +43,3 @@ class Counter:
 
 	def get_curr_value(self, ):
 		return "".join(self.value)
-
-c = Counter(2, [2,3,])
-assert c.get_curr_value() == "00"
-assert c.can_increment()
-c.increment()
-assert c.get_curr_value() == "01"
-assert c.can_increment()
-c.increment()
-assert c.get_curr_value() == "02"
-assert c.can_increment()
-c.increment()
-assert c.get_curr_value() == "10"
-assert c.can_increment()
-c.increment()
-assert c.get_curr_value() == "11"
-assert c.can_increment()
-c.increment()
-assert c.get_curr_value() == "12"
-assert not c.can_increment()
-print "ALL TESTS PASS"
