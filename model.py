@@ -5,7 +5,7 @@ import theano
 import theano.tensor as T
 import lasagne
 from lasagne.layers import *
-from data import train_valid_test_gen #create this later!
+from featurizer import token_featurize_corpus, framify_features
 # from layers import BroadcastLayer, highway_dense
 
 import time
@@ -16,18 +16,22 @@ CONSTS = {
 }
 
 BATCHSIZE = 32
-CONTEXT_DIM = CONSTS['vocab_len'] * 5
+CONTEXT_DIM = CONSTS['vocab_len'] * 5 # i.e., concatenate 5 words together to form the input to the network
 
+# todo - take in corpus, featurize, return generators/mmap'ed loops over the arrasy
+def train_valid_test_gen():
+	pass 
 
 def create_network(input_var):
 	l_inp = InputLayer(shape=(BATCHSIZE, CONTEXT_DIM), input_var=input_var)
 	l_dense_1 = DenseLayer(dropout(l_inp, 0.5), num_units=1024)
 	l_dense_2 = DenseLayer(dropout(l_dense_1, 0.5), num_units=1024)
-	l_dense_3 = DenseLayer(dropout(l_dense_2, 0.5), num_units=512, nonlinearity=lasagne.nonlinearities.softmax)
+	l_dense_3_class = DenseLayer(dropout(l_dense_2, 0.5), num_units=512, nonlinearity=lasagne.nonlinearities.softmax)
 
+	return l_dense_3_class
 
 if __name__ == "__main__":
-	train_gen, val_gen, test_gen = train_valid_test_gen(BATCHSIZE)
+	train_gen, val_gen, test_gen = train_valid_test_gen()
 
 	input_var = T.matrix('inputs')
 	target_var = T.tensor2('targets')
@@ -44,7 +48,7 @@ if __name__ == "__main__":
 
 	# Validation Metrics
 	val_prediction = lasagne.layers.get_output(network, deterministic=True)
-	val_loss = lasagne.objectives.categorical_crossentropy(val_prediction.reshape((-1, CONSTS['targ_char_dim'])), target_var.reshape((-1, CONSTS['targ_char_dim']))).mean()
+	val_loss = lasagne.objectives.categorical_crossentropy(val_prediction, target_var).mean()
 	val_acc = T.mean(T.eq(T.round(val_prediction), target_var))
 
 	# Test output fn:
