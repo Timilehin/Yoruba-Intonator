@@ -1,11 +1,12 @@
 """TODO - adapt this code to Yoruba corpus"""
-
 import numpy as np
 import theano
 import theano.tensor as T
 import lasagne
 from lasagne.layers import *
-from featurizer import token_featurize_corpus, framify_features
+from featurizer import token_featurize_corpus, framify_features, TextFeaturizer
+from data import ewords, ywords
+from transformations import all_variants as poss
 # from layers import BroadcastLayer, highway_dense
 
 import time
@@ -18,7 +19,14 @@ CONSTS = {
 BATCHSIZE = 32
 CONTEXT_DIM = CONSTS['vocab_len'] * 5 # i.e., concatenate 5 words together to form the input to the network
 
-# todo - take in corpus, featurize, return generators/mmap'ed loops over the arrasy
+word_classifiers = {}
+for eword in ewords:
+	possibilities = poss(eword)
+	featurizer = TextFeaturizer(possibilities)
+	layer = DenseLayer()
+	word_classifiers[eword] = (featurizer, layer)
+
+# todo - take in input data, return generators/mmap'ed loops over the arrays
 def train_valid_test_gen():
 	pass 
 
@@ -26,7 +34,7 @@ def create_network(input_var):
 	l_inp = InputLayer(shape=(BATCHSIZE, CONTEXT_DIM), input_var=input_var)
 	l_dense_1 = DenseLayer(dropout(l_inp, 0.5), num_units=1024)
 	l_dense_2 = DenseLayer(dropout(l_dense_1, 0.5), num_units=1024)
-	l_dense_3_class = DenseLayer(dropout(l_dense_2, 0.5), num_units=512, nonlinearity=lasagne.nonlinearities.softmax)
+	l_dense_3_class = DenseLayer(dropout(l_dense_2, 0.5), num_units=4, nonlinearity=lasagne.nonlinearities.softmax)
 
 	return l_dense_3_class
 
