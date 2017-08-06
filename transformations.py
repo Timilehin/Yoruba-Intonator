@@ -3,21 +3,6 @@ import string
 
 eng_letters = string.ascii_letters
 
-# transformations = {
-# 	"ENG_a": ["a_re", "a_do", "a_mi"],
-# 	"ENG_e": ["e_re", "e_do", "e_mi", "e_dot_do", "e_dot_re", "e_dot_mi"],
-# 	"ENG_E": ["E_re", "E_do", "E_mi", "E_dot_do", "E_dot_re", "E_dot_mi"],
-# 	"ENG_i": ["i_re", "i_do", "i_mi"],
-# 	"ENG_I": ["I_re", "I_do", "I_mi"],
-# 	"ENG_o": ["o_re", "o_do", "o_mi", "o_dot_do", "o_dot_re", "o_dot_mi"],
-# 	"ENG_O": ["O_re", "O_do", "O_mi", "O_dot_do", "O_dot_re", "O_dot_mi"],
-# 	"ENG_u": ["u_re", "u_do", "u_mi"],
-# 	"ENG_U": ["U_re", "U_do", "U_mi"],
-# 	"ENG_s": ["s", "s_dot"],
-# 	"ENG_S": ["S", "S_dot"],
-
-# 	"ENG_k": ["k"],
-# }
 
 """Creates a dictionary from english chars to all possible
 readable unicode chars"""
@@ -25,7 +10,9 @@ def all_accent_transformations():
 	readablechars = readable_char_to_unicode.keys()
 	transformations = {}
 	for ch in eng_letters:
-		transformations['ENG_' + ch] = filter(lambda key: key[0] == ch, readablechars)
+		valid_keys = filter(lambda key: key[0] == ch, readablechars)
+		letter_mappings = map(lambda x : readable_char_to_unicode[x], valid_keys)
+		transformations['ENG_' + ch] = letter_mappings
 
 	return transformations
 
