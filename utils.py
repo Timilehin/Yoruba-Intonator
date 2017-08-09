@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+
 import os
 import urllib2
 from itertools import chain
@@ -18,3 +21,19 @@ def download_file_unicode(path):
 	resp = urllib2.urlopen(path)
 	encoding = resp.headers.getparam('charset')
 	return unicode(resp.read(), encoding)
+
+def lower_case(word):
+	"""this function takes in a marked yoruba word and returns the lower case version"""
+	result = ""
+	marked_capital_letters = {
+							  "À":"à", "Á":"á", "É":"é", "È":"è","Ẹ":"ẹ", 
+							  "Ì":"ì", "Í":"í", "Ó":"ó", "Ò":"ò", "Ṣ":"ṣ", 
+							  "Ọ":"ọ", "Ú":"ú", "Ù":"ù"
+							 }
+	for letter in word:
+		if letter in marked_capital_letters.keys():
+			result += marked_capital_letters[letter]
+		else:
+			#print letter
+			result += letter.lower()
+	return result
