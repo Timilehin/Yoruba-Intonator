@@ -74,7 +74,7 @@ def framify_features(matrix, window_size):
 
 """Takes in a corpus of accented text. Creates input data from the accent-stripped
 version and targets from the accented words. Returns np arrays with shapes: """
-def create_data(accented_text, window_size):
+def create_data(accented_text, window_size, return_featurizers=False):
 	accented_f, stripped_f = create_intonation_sources(accented_text)
 	input_feats = stripped_f.featurize_words(stripped_f.corpus)
 	input_frames = framify_features(input_feats, window_size)
@@ -83,6 +83,8 @@ def create_data(accented_text, window_size):
 	slice_bound = window_size / 2
 	target_feats = target_feats[slice_bound:-slice_bound]
 
+	if return_featurizers:
+		return input_frames, target_feats, stripped_f, accented_f
 	return input_frames, target_feats
 
 
