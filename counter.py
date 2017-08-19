@@ -18,26 +18,28 @@ class Counter:
 
 	def increment(self, ):
 		assert self.can_increment()
-
 		#increment case
-		i=1
-		curr = int(self.value[-i])
-		if curr < self.bases[-i]-1:
+		#print self.bases
+		curr = int(self.value[-1])
+		if curr < self.bases[-1]-1:
 			curr += 1
-			self.value[-i] = str(curr)
-			#print "1value is now" + str(self.value)
+			self.value[-1] = str(curr)
+			#print "1*value is now" + str(self.value)
 			self.num_increments += 1
 			return
 
 		#Carry case
-		self.value[-i] = "0"
+		self.value[-1] = "0"
 		#print "2value is now" + str(self.value)
-		i+=1
-		pos = i 
+		pos = 2
+		#print "val="+str(int(self.value[-pos]))
+		#print "base="+str(int(self.bases[-pos]) -1)
 		while int(self.value[-pos]) == int(self.bases[-pos]) -1:
+			self.value[-pos] = "0"
 			pos += 1
+			#print "3value is now" + str(self.value)
 		self.value[-pos] = str(int(self.value[-pos])+1)
-		#print "3value is now" + str(self.value)
+		#print "4*value is now" + str(self.value)
 		self.num_increments += 1
 		return
 

@@ -2,7 +2,9 @@
 # -*- coding: latin-1 -*-
 
 import string 
+import utils
 
+#TODO(timifasubaa):refactor this fn out! nowin utils.py
 def lower_case(word):
 	"""this function takes in a marked yoruba word and returns the lower case version"""
 	result = ""

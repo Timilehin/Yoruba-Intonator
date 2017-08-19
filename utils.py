@@ -37,3 +37,11 @@ def lower_case(word):
 			#print letter
 			result += letter.lower()
 	return result
+
+def sentencifier(input_filepath, output_filepath):
+	#takes a file and makes a new file with just one sentence per line
+	with open(input_filepath, "r") as f:
+		sents = nltk.tokenize.sent_tokenize(f.read())
+		with open (output_filepath, "w+") as o:
+			for line in sents:
+				o.writeline(line)
