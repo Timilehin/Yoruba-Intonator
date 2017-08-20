@@ -4,6 +4,8 @@
 from __future__ import division 
 import intonator
 import collections
+from operator import attrgetter
+
 
 """
 load in the probability disctiobutions into a discionary.
@@ -61,12 +63,15 @@ while 1:
 			#print max_node*
 			#print max_val*
 			#print "!!"*
+
 			all_word_possibliities[layer][curr_node_pos] = Node(curr_node.word, max_val, max_node.so_far + [curr_node.word])
+
 
 	final_layer = all_word_possibliities[-1]
 	final_layer = [node for node in final_layer if node.score != 0]
 	if final_layer:
-		print "The most likely intended intonations and their probabilities are:"
+		print "The most likely intended intonation(s) in descending order are:"
+		final_layer = sorted(final_layer, key=attrgetter('score'), reverse=True)
 		for prediction in final_layer:
 			print prediction.score, " ".join(prediction.so_far)
 	else:
