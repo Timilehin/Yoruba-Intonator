@@ -2,6 +2,7 @@ import collections
 import utils
 
 def get_all_pairs(words): 
+	#TODO(timifasubaa):rename to get_semantic_bigram_pairs
 	#given a sentence, return all the pairs of words in the sentence
 	result = []
 	def all_pairs_helper(left_word, remaining_words):
@@ -23,6 +24,13 @@ def line_cleaner(line):
 	return result
 
 
+def get_bigram_pairs(sentence):
+	#returns a counter containing bigram frequencies.
+	bigram = collections.Counter()
+	for i in range(len(sentence)-1):
+		bigram[(sentence[i], sentence[i+1])] += 1
+	return bigram
+
 filename = "yoruba_sentences.txt"
 file = open(filename, "r")
 
@@ -34,10 +42,7 @@ for f_line in file:
 	line = f_line.split()
 	clean_line = line_cleaner(line)
 
-	#bigram
-	if len(clean_line) > 1:
-		for i in range(len(clean_line)-1):
-			bigram_freq[(clean_line[i], clean_line[i+1])] += 1
+	bigram_freq += get_bigram_pairs(clean_line)
 
 	#semantic_bigram
 	all_pairs = get_all_pairs(clean_line)
@@ -46,20 +51,10 @@ for f_line in file:
 		semantic_bigram_freq[tuple(pair)] += 1
 
 
-#write to file
-#for words, freq in semantic_bigram_freq.items():
-#	if freq > 100:
-#		print words[0]
-#		print words[1]
-#		print freq
-#		print "~~~"
-
-
-
 fh = open("contextual_bigram_data.txt","w")
 
 for words, freq in semantic_bigram_freq.items():
-  	fh.write(words[0]+", "+words[1]+", "+str(freq))
+  	fh.write(words[0]+","+words[1]+","+str(freq))
   	fh.write("\n")
 
 fh.close()
@@ -68,7 +63,7 @@ fh.close()
 bigram_file = open("bigram_data.txt","w")
 
 for words, freq in semantic_bigram_freq.items():
-  	bigram_file.write(words[0]+", "+words[1]+", "+str(freq))
+  	bigram_file.write(words[0]+","+words[1]+","+str(freq))
   	bigram_file.write("\n")
 
 bigram_file.close()
