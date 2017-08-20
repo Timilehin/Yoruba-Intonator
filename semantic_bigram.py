@@ -29,6 +29,7 @@ def get_bigram_pairs(sentence):
 	bigram = collections.Counter()
 	for i in range(len(sentence)-1):
 		bigram[(sentence[i], sentence[i+1])] += 1
+	#print bigram
 	return bigram
 
 filename = "yoruba_sentences.txt"
@@ -62,12 +63,11 @@ fh.close()
 
 bigram_file = open("bigram_data.txt","w")
 
-for words, freq in semantic_bigram_freq.items():
+for words, freq in bigram_freq.items():
   	bigram_file.write(words[0]+","+words[1]+","+str(freq))
   	bigram_file.write("\n")
 
 bigram_file.close()
-
 
 
 #have a list of word pairs containing the two words. THey should be interchangeable. 

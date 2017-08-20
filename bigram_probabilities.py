@@ -6,14 +6,6 @@ from __future__ import division
 import collections
 import intonator
 
-
-"""for each line, 
-if it is te first word, map from 
-
-
-{"w1": [(w2, count), (w2, count)]}
-"""
-
 def get_bigram_distribution():
 	#Takes in bigrams of the form a,b,2 ... a,c,3 and returns counts of the form {'a':[('b', 2), ('c', 3)]}
 	word_mappings = {}
@@ -32,9 +24,9 @@ def get_probability_distribution(word, nexts_and_counts):
 	#{(a,b):2/5, (a, c):3/5}
 	total = 0
 	result = {}
-	print nexts_and_counts
+	#print nexts_and_counts
 	for w2, count in nexts_and_counts:
-		print count,"---"
+		#print count,"---"
 		count = int(count.strip())
 		total += count
 		result[(word, w2)] = count
@@ -52,15 +44,17 @@ bigram_distribution = get_bigram_distribution()
 for distribution in bigram_distribution.items():
 	pair_probabilities = get_probability_distribution(distribution[0], distribution[1])
 	for pair, probability in pair_probabilities.items():
-		print pair
-		print probability
+		#print pair
+		#print probability
 		bigram_prob_file.write(pair[0]+","+pair[1]+","+str(probability)+"\n")
 
 bigram_prob_file.close()
 
 #write a function that takes in word, [follower, count] and returns 
 
-"""while 1:
+""" only uncomment this if you want to use bigram_probabilities from the command line. 
+TODO(timifasubaa):refactor to make user able to select what service to use from cmdline flag
+while 1:
 	word1 = raw_input("type in the first word of the pair\nword1: ")
 	word2 = raw_input("Now the second\nword2: ")
 	word1_possibilities = intonator.get_verified_possibilities(word1)

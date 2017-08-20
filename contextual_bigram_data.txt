@@ -7662,7 +7662,7 @@ èniyàn,“bi,1
 ojú,Ọmọ,2
 agogo,tọ́jú,1
 àwọn,ètò,4
-dúró,ni,31
+dúró,ni,30
 ìyàwo,ó,2
 kùrò,nínú,1
 ipò,yókù,2
@@ -53241,7 +53241,7 @@ elizabeth,Ẹgbàálémẹrindinlólgún,1
 igbo,miran,1
 ọ̀fẹ́,–,2
 èkó,ibi,1
-dúró,Àkàngbé,3
+dúró,Àkàngbé,2
 kò,nya,1
 ìran,ẹ̀,2
 bóyá,ẹ̀sùn,1
@@ -57591,7 +57591,7 @@ iwà,ẹ̀kọ́,1
 mu,mun’,1
 ṣe,ṣẹ́,3
 fún,ó,140
-dúró,dúró,3
+dúró,dúró,2
 mọ,sọ,6
 nítorí,òkú,1
 ni,ìdárò,5
@@ -69947,7 +69947,7 @@ ni,“alápà,1
 pàtàkì,wà,2
 mi”,tàbi,1
 náírà,ìgbà,1
-dúró,orímóògùnjẹ́,13
+dúró,orímóògùnjẹ́,12
 ìlù,ó,2
 bá,sí,25
 olóyè,pàtàki,2
@@ -92854,7 +92854,7 @@ igbà,inú,1
 jijà,sọ̀rọ̀,1
 ìyàwó,Ọ̀pọ̀lọpọ̀,1
 nígbà,yẹ,4
-dúró,ọmọ,5
+dúró,ọmọ,4
 mímọ,ṣe,1
 adiẹ,rẹ̀,1
 gbé,rì,1
@@ -108827,7 +108827,7 @@ ó,ẹ̀rọ,10
 ijù”,kìnìún,1
 ni,sọnú,1
 aláwọ̀dúdú,ilé,5
-dúró,àkọ́bí,3
+dúró,àkọ́bí,2
 buhari/òṣinbàjò,òkèòkun,1
 le,nítorí,1
 ikókó,iṣu,1

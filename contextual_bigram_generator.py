@@ -9,17 +9,17 @@ import collections
 import intonator
 
 
-def get_bigram_frequencies():
+def get_contextual_bigram_frequencies():
 	file = open("contextual_bigram_data.txt","r")
 	freq_counter = collections.Counter()
 
 	for line in file:
 		w1, w2, freq = line.split(",")
 		freq_counter[(w1.strip(), w2.strip())] = freq
-	file.close()
+	file.close()	
 	return freq_counter
 
-bigram_frequencies = get_bigram_frequencies()
+bigram_frequencies = get_contextual_bigram_frequencies()
 bigram_frequency_items = bigram_frequencies.items()
 
 print("welcome to the semantic bigram. \
@@ -35,5 +35,3 @@ while 1:
 			words.sort()
 			print w1 +" and " + w2 + " occur together " + str(bigram_frequencies[tuple(words)]) + " times"
 	#get all possibilities and generate all pairs
-	
-

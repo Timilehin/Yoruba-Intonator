@@ -20,7 +20,7 @@ def get_semantic_bigram_frequencies():
 	return freq_counter
 
 def get_bigram_frequencies():
-	file = open("contextual_bigram_data.txt","r")
+	file = open("bigram_data.txt","r")
 	freq_counter = collections.Counter()
 
 	for line in file:
@@ -31,7 +31,7 @@ def get_bigram_frequencies():
 
 	
 
-bigram_frequencies = get_bigram_frequencies()
+"""bigram_frequencies = get_bigram_frequencies()
 bigram_frequency_items = bigram_frequencies.items()
 
 print("welcome to the semantic bigram. \
@@ -49,3 +49,4 @@ while 1:
 	#get all possibilities and generate all pairs
 	
 
+"""

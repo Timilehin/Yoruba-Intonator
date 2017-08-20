@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+
 from __future__ import division 
 import intonator
 import collections
@@ -48,22 +51,22 @@ while 1:
 				#compute the max productof all the combinations of the lower to the higher? 
 				prev_node=all_word_possibliities[layer-1][prev_node_pos]
 				bigram_prob = float(bigram_probabilities[(prev_node.word, curr_node.word)]) if (prev_node.word, curr_node.word) in bigram_probabilities else 0
-				print bigram_prob,"is the probability of ",prev_node.word,curr_node.word
+				#print bigram_prob,"is the probability of ",prev_node.word,curr_node.word
 				score = prev_node.score * bigram_prob
 				if score > max_val or not  max_node:
 					max_val = score
 					max_node = prev_node
-			print "!!"
-			print curr_node
-			print max_node
-			print max_val
-			print "!!"
+			#print "!!"*
+			#print curr_node*
+			#print max_node*
+			#print max_val*
+			#print "!!"*
 			all_word_possibliities[layer][curr_node_pos] = Node(curr_node.word, max_val, max_node.so_far + [curr_node.word])
 
 	final_layer = all_word_possibliities[-1]
 	final_layer = [node for node in final_layer if node.score != 0]
-	print "The most likely intended intonations and their probabilities are: \n"
 	if final_layer:
+		print "The most likely intended intonations and their probabilities are:"
 		for prediction in final_layer:
 			print prediction.score, " ".join(prediction.so_far)
 	else:

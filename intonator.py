@@ -19,7 +19,6 @@ def get_all_possibilities(word):
 	possibilities_in_TCHSET = map(lambda x: eng_to_readablechars[x], letters_in_TCHSET)
 	possibilities_per_slot = map(lambda x: len(x), possibilities_in_TCHSET)
 	possibility_counter = counter.Counter(len(word), possibilities_per_slot)
-	print "I get here"
 
 	generate_word = get_word_generator(possibilities_in_TCHSET)
 	all_possibilities = []
