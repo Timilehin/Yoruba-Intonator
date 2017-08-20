@@ -60,7 +60,14 @@ while 1:
 			print "!!"
 			all_word_possibliities[layer][curr_node_pos] = Node(curr_node.word, max_val, max_node.so_far + [curr_node.word])
 
-	all_word_possibliities
+	final_layer = all_word_possibliities[-1]
+	final_layer = [node for node in final_layer if node.score != 0]
+	print "The most likely intended intonations and their probabilities are: \n"
+	if final_layer:
+		for prediction in final_layer:
+			print prediction.score, " ".join(prediction.so_far)
+	else:
+		print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
 
 	#print "There are {0} verified possibilities".format(len(verified_words))
 	#for word in verified_words:
