@@ -33,7 +33,7 @@ contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_freq
 while 1:
 	sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
 	sentence = sentence.split()
-	sentence = map(lambda x : x.lower(), sentence)
+	sentence = map(lambda x : x.lower().translate(None, '.,:;-()\'\"\"'), sentence)
 	all_word_possibliities = map(lambda x: intonator.get_verified_possibilities(x), sentence)
 
 	Node = collections.namedtuple("Node", "word, score, so_far")
