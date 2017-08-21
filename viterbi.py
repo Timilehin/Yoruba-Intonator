@@ -33,6 +33,7 @@ contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_freq
 while 1:
 	sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
 	sentence = sentence.split()
+	sentence = map(lambda x : x.lower(), sentence)
 	all_word_possibliities = map(lambda x: intonator.get_verified_possibilities(x), sentence)
 
 	Node = collections.namedtuple("Node", "word, score, so_far")
@@ -63,7 +64,7 @@ while 1:
 
 				score = (0.75)*score + (0.25)*contextual_bigram_score
 
-				if score > max_val or not  max_node:
+				if score > max_val or not max_node:
 					max_val = score
 					max_node = prev_node
 			#print "!!"*
