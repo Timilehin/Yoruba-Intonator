@@ -22,7 +22,7 @@ def get_contextual_bigram_frequencies():
 bigram_frequencies = get_contextual_bigram_frequencies()
 bigram_frequency_items = bigram_frequencies.items()
 
-print("welcome to the semantic bigram. \
+"""print("welcome to the semantic bigram. \
 	Give me two words and I'll tell you howmany times they appeared in the same context in our corpus.")
 while 1:
 	word1 = raw_input("type in the first word of the pair\nword1: ")
@@ -34,4 +34,4 @@ while 1:
 			words = [w1, w2]
 			words.sort()
 			print w1 +" and " + w2 + " occur together " + str(bigram_frequencies[tuple(words)]) + " times"
-	#get all possibilities and generate all pairs
+	#get all possibilities and generate all pairs"""

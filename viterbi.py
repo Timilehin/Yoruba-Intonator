@@ -1,10 +1,8 @@
-#!/usr/bin/python
-# -*- coding: latin-1 -*-
-
 from __future__ import division 
 import intonator
 import collections
 from operator import attrgetter
+import contextual_bigram_generator
 
 
 """
@@ -29,6 +27,8 @@ def get_probability_distributions():
 	return probability_pairs
 
 bigram_probabilities = get_probability_distributions()
+contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_frequencies()
+
 
 while 1:
 	sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
@@ -55,6 +55,14 @@ while 1:
 				bigram_prob = float(bigram_probabilities[(prev_node.word, curr_node.word)]) if (prev_node.word, curr_node.word) in bigram_probabilities else 0
 				#print bigram_prob,"is the probability of ",prev_node.word,curr_node.word
 				score = prev_node.score * bigram_prob
+				contextual_bigram_score = 0
+				for word in prev_node.so_far:
+					words = [word, curr_node.word]
+					words.sort()
+					contextual_bigram_score += int(contextual_bigram_freqs[tuple(words)])/200
+
+				score = (0.75)*score + (0.25)*contextual_bigram_score
+
 				if score > max_val or not  max_node:
 					max_val = score
 					max_node = prev_node
