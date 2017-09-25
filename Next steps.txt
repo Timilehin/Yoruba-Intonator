@@ -1,5 +1,4 @@
 Next steps 
-1. Make the dictionary
-2. Make the filtering steps an procedures
-3. make the probability distribution thingy 
-4. pick the best and return. 
+1. Run the laplacian smoothing 
+2. Put it as a python flask app where you type in the inmarked text and we add diacritics 
+3. Create a chrome extension 

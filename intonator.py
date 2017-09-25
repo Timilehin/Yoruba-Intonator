@@ -14,6 +14,7 @@ def get_word_generator(possibilities_per_position):
 	return word_generator
 
 def get_all_possibilities(word):
+	print(word)
 	letters = list(word)
 	letters_in_TCHSET = map(lambda x : "ENG_"+ x, letters)
 	possibilities_in_TCHSET = map(lambda x: eng_to_readablechars[x], letters_in_TCHSET)

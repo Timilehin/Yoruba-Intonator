@@ -29,9 +29,13 @@ def get_probability_distributions():
 bigram_probabilities = get_probability_distributions()
 contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_frequencies()
 
+def repl():
+	while 1:
+		sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
+		print(get_most_likely_sentence_markings(sentence))
 
-while 1:
-	sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
+def get_most_likely_sentence_markings(sentence):
+	sentence = str(sentence)
 	sentence = sentence.split()
 	sentence = map(lambda x : x.lower().translate(None, '.,:;-()\'\"\"'), sentence)
 	all_word_possibliities = map(lambda x: intonator.get_verified_possibilities(x), sentence)
@@ -41,9 +45,6 @@ while 1:
 		init_val = 1 if i == 0 else 0
 		all_word_possibliities[i] = map(lambda x : Node(x, init_val, [x]), all_word_possibliities[i])
 		
-
-
-	#print all_word_possibliities
 	
 	for layer in range(1, len(all_word_possibliities)):
 		for curr_node_pos in range(len(all_word_possibliities[layer])):
@@ -79,12 +80,14 @@ while 1:
 	final_layer = all_word_possibliities[-1]
 	final_layer = [node for node in final_layer if node.score != 0]
 	if final_layer:
-		print "The most likely intended intonation(s) in descending order are:"
+		#print "The most likely intended intonation(s) in descending order are:"
 		final_layer = sorted(final_layer, key=attrgetter('score'), reverse=True)
-		for prediction in final_layer:
-			print prediction.score, " ".join(prediction.so_far)
+		return " ".join(final_layer[0].so_far)
+		#for prediction in final_layer:
+		#	print prediction.score, " ".join(prediction.so_far)
 	else:
-		print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
+		#print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
+		return sentence
 
 	#print "There are {0} verified possibilities".format(len(verified_words))
 	#for word in verified_words:
