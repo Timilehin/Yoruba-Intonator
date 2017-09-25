@@ -13,18 +13,14 @@ bootstrap = Bootstrap(app)
 
 
 class LoginForm(FlaskForm):
-	username = StringField('username', validators=[InputRequired()],  widget=TextArea())
+	unmarked_yoruba = StringField('Unmarked Yoruba: ', validators=[InputRequired()],  widget=TextArea())
 
-@app.route('/')
-def index():
-	return "Hello and welcome! <a href='/form'>go to form</a>"
-
-@app.route('/form', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def form():
 	form = LoginForm()
 
 	if form.validate_on_submit():
-		return '<h1> The translated version is:</h1><br/> {} <a href=''>Translate more </a>'.format(viterbi.get_most_likely_sentence_markings(form.username.data))
+		return '<h1> The translated version is:</h1><br/> {} <a href=''>Translate more </a>'.format(viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data))
 
 	return render_template('form.html', form=form)
 
