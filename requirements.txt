@@ -11,6 +11,7 @@ Flask-OpenID==1.2.5
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.14.2
 funcsigs==1.0.2
+gunicorn==19.3.0
 html5lib==0.9999999
 idna==2.6
 ipaddress==1.0.18
