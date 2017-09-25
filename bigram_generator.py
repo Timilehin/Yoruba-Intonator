@@ -10,7 +10,7 @@ import intonator
 
 
 def get_semantic_bigram_frequencies():
-	file = open("contextual_bigram_data.txt","r")
+	file = open("data/contextual_bigram_data.txt","r")
 	freq_counter = collections.Counter()
 
 	for line in file:
@@ -20,7 +20,7 @@ def get_semantic_bigram_frequencies():
 	return freq_counter
 
 def get_bigram_frequencies():
-	file = open("bigram_data.txt","r")
+	file = open("data/bigram_data.txt","r")
 	freq_counter = collections.Counter()
 
 	for line in file:

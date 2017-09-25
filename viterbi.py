@@ -15,7 +15,7 @@ You keep going higher on the array levels. For each new level, for each item in 
 
 def get_probability_distributions():
 	probability_pairs = {}
-	filename = "bigram_probabilities.txt"
+	filename = "data/bigram_probabilities.txt"
 	file = open(filename, "r")
 	for line in file:
 		line = line.split(",")

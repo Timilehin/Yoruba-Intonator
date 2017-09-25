@@ -10,7 +10,7 @@ def get_bigram_distribution():
 	#Takes in bigrams of the form a,b,2 ... a,c,3 and returns counts of the form {'a':[('b', 2), ('c', 3)]}
 	word_mappings = {}
 
-	file = open("bigram_data.txt","r")
+	file = open("data/bigram_data.txt","r")
 	for line in file:
 		w1, w2, freq = line.split(",")
 		if w1 not in word_mappings:
@@ -38,7 +38,7 @@ def get_probability_distribution(word, nexts_and_counts):
 	return result
 
 
-bigram_prob_file = open("bigram_probabilities.txt","w")
+bigram_prob_file = open("data/bigram_probabilities.txt","w")
 
 bigram_distribution = get_bigram_distribution()
 for distribution in bigram_distribution.items():
