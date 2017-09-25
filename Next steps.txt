@@ -1,4 +1,4 @@
 Next steps 
 1. Run the laplacian smoothing 
-2. Put it as a python flask app where you type in the inmarked text and we add diacritics 
-3. Create a chrome extension 
+2. Create a chrome extension 
+3. Improve the code for 

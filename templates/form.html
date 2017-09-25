@@ -1,11 +1,15 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {%block title%}
-<title></title>
+<title>Yoruba Intonator</title>
 {%endblock%}
 
+{%block navbar%}
+
+{%endblock%}
 
 {%block content%}
+
 <div class="cntainer">
 <form method="POST" action="{{ url_for('form')}}">
 	{{  form.csrf_token  }}
