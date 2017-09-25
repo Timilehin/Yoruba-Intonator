@@ -87,7 +87,7 @@ def get_most_likely_sentence_markings(sentence):
 		#	print prediction.score, " ".join(prediction.so_far)
 	else:
 		#print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
-		return sentence
+		return " ".join(sentence)
 
 	#print "There are {0} verified possibilities".format(len(verified_words))
 	#for word in verified_words:
