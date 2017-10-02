@@ -31,9 +31,9 @@ def form():
 			else:
 			    append_write = 'w' # make a new file if not
 
-			highscore = open(filename,append_write)
-			highscore.write(translated_sentence + '\n')
-			highscore.close()
+			untranslated_sentences = open(filename,append_write)
+			untranslated_sentences.write(translated_sentence + '\n')
+			untranslated_sentencess.close()
 
 		response = "<h1>Sorry, I was unable to translate:</h1>" if unable_to_translate else "<h1> The translated version is:</h1>"
 		#log words you can't mark
@@ -44,7 +44,10 @@ def form():
 
 @app.route('/untranslated', methods=['GET', 'POST'])
 def untranslated():
-	untranslated_sentences = open("untranslatable.txt",'r')
+	try:
+		untranslated_sentences = open("untranslatable.txt",'r')
+	except:
+		return "There are no untranslated sentences yet"
 	result = ""
 	for line in untranslated_sentences:
 		result+=line
