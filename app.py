@@ -20,7 +20,12 @@ def form():
 	form = LoginForm()
 
 	if form.validate_on_submit():
-		return '<h1> The translated version is:</h1><br/> {} <a href=''>Translate more </a>'.format(viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data))
+		translated_sentence = viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data)
+		unable_to_translate = form.unmarked_yoruba.data == translated_sentence
+		response = "Sorry, I was unable to translate:</h1>" if unable_to_translate else "<h1> The translated version is:</h1>"
+		#log words you can't mark
+
+		return '{}<br/> {} <a href=''><br/>Translate more </a>'.format(response, translated_sentence)
 
 	return render_template('form.html', form=form)
 
