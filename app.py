@@ -44,7 +44,11 @@ def form():
 
 @app.route('/untranslated', methods=['GET', 'POST'])
 def untranslated():
-	return "testing123"
+	untranslated_sentences = open("untranslatable.txt",'r')
+	result = ""
+	for line in untranslated_sentences:
+		result+=line
+	return result
 
 if __name__ == '__main__':
 	app.run(debug=True)
