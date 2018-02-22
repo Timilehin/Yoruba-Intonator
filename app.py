@@ -33,7 +33,7 @@ def form():
 
 			untranslated_sentences = open(filename,append_write)
 			untranslated_sentences.write(translated_sentence + '\n')
-			untranslated_sentencess.close()
+			untranslated_sentences.close()
 
 		response = "<h1>Sorry, I was unable to translate:</h1>" if unable_to_translate else "<h1> The translated version is:</h1>"
 		#log words you can't mark
