@@ -25,13 +25,6 @@ class LoginForm(FlaskForm):
 def form():
 	form = LoginForm()
 	if form.validate_on_submit():
-		#if() it is character model?
-		#load the model, 
-		#encode the input, 
-		#put it into the model
-		#add the encoder and decoder to utils? or just make the ml version into its own file. and clean up the repo.
-		#decode the output and return.
-		#else
 		if form.model.data == 'char':
 			translated_sentence = intonate(form.unmarked_yoruba.data)
 		if form.model.data == 'word':
