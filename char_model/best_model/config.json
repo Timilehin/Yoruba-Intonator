@@ -1,0 +1,11 @@
+{
+    "char_embedding_size": 25, 
+    "char_feature": true, 
+    "char_vocab_size": 33, 
+    "crf": true, 
+    "dropout": 0.5, 
+    "num_char_lstm_units": 25, 
+    "num_word_lstm_units": 100, 
+    "vocab_size": 30, 
+    "word_embedding_size": 100
+}

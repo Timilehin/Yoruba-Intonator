@@ -1,8 +1,11 @@
 from flask import Flask, render_template 
 from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField
+from wtforms import StringField, RadioField
 from wtforms.validators import InputRequired
 from wtforms.widgets import TextArea
+
+#from char_model.char_model import intonate
+from char_model.char_model import intonate
 
 from flask_bootstrap import Bootstrap
 import viterbi
@@ -13,14 +16,27 @@ bootstrap = Bootstrap(app)
 
 
 class LoginForm(FlaskForm):
+	model = RadioField('What model to use?', coerce=str, choices=[('word','word based model'),('char','char based model')])
 	unmarked_yoruba = StringField('Unmarked Yoruba: ', validators=[InputRequired()],  widget=TextArea())
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def form():
 	form = LoginForm()
-
 	if form.validate_on_submit():
-		translated_sentence = viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data)
+		#if() it is character model?
+		#load the model, 
+		#encode the input, 
+		#put it into the model
+		#add the encoder and decoder to utils? or just make the ml version into its own file. and clean up the repo.
+		#decode the output and return.
+		#else
+		if form.model.data == 'char':
+			translated_sentence = intonate(form.unmarked_yoruba.data)
+		if form.model.data == 'word':
+			translated_sentence = viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data)
+
 		unable_to_translate = form.unmarked_yoruba.data == translated_sentence
 		if unable_to_translate:
 			import os
