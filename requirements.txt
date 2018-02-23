@@ -1,3 +1,4 @@
+m2r==0.1.13
 decorator==4.1.2
 dominate==2.3.1
 enum34==1.1.6
@@ -23,3 +24,4 @@ macholib==1.5.1
 SQLAlchemy==1.1.14
 Werkzeug==0.12.2
 WTForms==2.1
+git+git://github.com/Hironsan/anago.git@97a579efa49a478d690c099f08ebc6907db44703
