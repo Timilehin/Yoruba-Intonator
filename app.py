@@ -38,7 +38,7 @@ def form():
 		response = "<h1>Sorry, I was unable to translate:</h1>" if unable_to_translate else "<h1> The translated version is:</h1>"
 		#log words you can't mark
 
-		return '{}<br/> {} <a href=''><br/>Translate more </a>'.format(response, translated_sentence)
+		return u'{}<br/> {} <a href=''><br/>Translate more </a>'.format(response, translated_sentence)
 
 	return render_template('form.html', form=form)
 

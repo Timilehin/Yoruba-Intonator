@@ -3,6 +3,7 @@ import intonator
 import collections
 from operator import attrgetter
 import contextual_bigram_generator
+import unicodedata
 
 
 """
@@ -23,22 +24,22 @@ def get_probability_distributions():
 		#print line
 		if len(line) != 3:
 			continue
-		probability_pairs[(line[0], line[1])] = line[2]
+		left = unicodedata.normalize('NFD', line[0].decode("utf-8"))
+		right = curr = unicodedata.normalize('NFD', line[1].decode("utf-8"))
+		probability_pairs[(left, right)] = line[2]
+	print probability_pairs.items()[0]
 	return probability_pairs
 
 bigram_probabilities = get_probability_distributions()
 contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_frequencies()
-
-def repl():
-	while 1:
-		sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
-		print(get_most_likely_sentence_markings(sentence))
 
 def get_most_likely_sentence_markings(sentence):
 	sentence = str(sentence)
 	sentence = sentence.split()
 	sentence = map(lambda x : x.lower().translate(None, '.,:;-()\'\"\"'), sentence)
 	all_word_possibliities = map(lambda x: intonator.get_verified_possibilities(x), sentence)
+	print"===="
+	print all_word_possibliities
 
 	Node = collections.namedtuple("Node", "word, score, so_far")
 	for i in range(len(all_word_possibliities)):
@@ -51,15 +52,26 @@ def get_most_likely_sentence_markings(sentence):
 			max_val = float('-inf')
 			max_node = None
 			curr_node=all_word_possibliities[layer][curr_node_pos]
+			#curr_node.word=all_word_possibliities[layer][curr_node_pos].word.encode("utf-8")
 			for prev_node_pos in range(len(all_word_possibliities[layer-1])):
 				#compute the max productof all the combinations of the lower to the higher? 
 				prev_node=all_word_possibliities[layer-1][prev_node_pos]
-				bigram_prob = float(bigram_probabilities[(prev_node.word, curr_node.word)]) if (prev_node.word, curr_node.word) in bigram_probabilities else 0
+				print(type(curr_node.word))
+				a=unicodedata.normalize('NFD', prev_node.word)
+				#print curr_node.word
+				#print "?????"
+				b=unicodedata.normalize('NFD', curr_node.word)
+				#print a
+				#print b
+				bigram_prob = float(bigram_probabilities[(a, b)])\
+					if (a, b) in bigram_probabilities else 0
 				#print bigram_prob,"is the probability of ",prev_node.word,curr_node.word
 				score = prev_node.score * bigram_prob
-				contextual_bigram_score = 0
+				#print score
+				#print bigram_prob
+				contextual_bigram_score = 0.0001
 				for word in prev_node.so_far:
-					words = [word, curr_node.word]
+					words = [unicodedata.normalize('NFD', word), b]
 					words.sort()
 					contextual_bigram_score += int(contextual_bigram_freqs[tuple(words)])/200
 
@@ -76,10 +88,11 @@ def get_most_likely_sentence_markings(sentence):
 
 			all_word_possibliities[layer][curr_node_pos] = Node(curr_node.word, max_val, max_node.so_far + [curr_node.word])
 
-
+	#print all_word_possibliities
 	final_layer = all_word_possibliities[-1]
 	final_layer = [node for node in final_layer if node.score != 0]
 	if final_layer:
+		#print "I get here"
 		#print "The most likely intended intonation(s) in descending order are:"
 		final_layer = sorted(final_layer, key=attrgetter('score'), reverse=True)
 		return " ".join(final_layer[0].so_far)
@@ -87,9 +100,13 @@ def get_most_likely_sentence_markings(sentence):
 		#	print prediction.score, " ".join(prediction.so_far)
 	else:
 		#print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
-		return " ".join(sentence)
+		return None#" ".join(sentence)
 
 	#print "There are {0} verified possibilities".format(len(verified_words))
 	#for word in verified_words:
 	#	print word
-	
+
+def repl():
+	while 1:
+		sentence = raw_input("type in the sentence you want to intonate\nsentence: ")
+		print(get_most_likely_sentence_markings(sentence))	

@@ -3,8 +3,9 @@ Then you transform it into the mapping?
 Cool 
 """
 import counter
-import transformations
 import dictionary_generator
+import transformations
+import unicodedata
 
 def get_word_generator(possibilities_per_position):
 	def word_generator(number):
@@ -17,10 +18,11 @@ def get_all_possibilities(word):
 	print(word)
 	letters = list(word)
 	letters_in_TCHSET = map(lambda x : "ENG_"+ x, letters)
-	possibilities_in_TCHSET = map(lambda x: eng_to_readablechars[x], letters_in_TCHSET)
-	possibilities_per_slot = map(lambda x: len(x), possibilities_in_TCHSET)
+	possibilities_in_TCHSET = map(lambda x: eng_to_readablechars[x] if eng_to_readablechars[x] else x, letters_in_TCHSET)
+	possibilities_per_slot = map(lambda x: len(x) if x else 1, possibilities_in_TCHSET)
+	if possibilities_per_slot == 0:
+		return [word]
 	possibility_counter = counter.Counter(len(word), possibilities_per_slot)
-
 	generate_word = get_word_generator(possibilities_in_TCHSET)
 	all_possibilities = []
 	selection_number = possibility_counter.get_curr_value()
@@ -30,8 +32,7 @@ def get_all_possibilities(word):
 		possibility_counter.increment()
 		selection_number = possibility_counter.get_curr_value()
 		all_possibilities.append(generate_word(selection_number))
-	#get all possinilities from a function...
-	#print all_possibilities
+
 	all_possibilities = map(lambda x : "".join(x), all_possibilities)
 	return all_possibilities
 
@@ -41,7 +42,20 @@ eng_to_readablechars = transformations.all_accent_transformations()
 
 def get_verified_possibilities(word):
 	all_possibilities = get_all_possibilities(word)
-	return filter(lambda x : x in yoruba_dictionary, all_possibilities)
+	res = []
+	for i in all_possibilities:
+		curr = unicodedata.normalize('NFD', i.decode("utf-8"))
+		if curr in yoruba_dictionary:
+			#res.append(curr)
+			curr = unicodedata.normalize('NFC', curr)
+			res.append(curr)
+		#else: 
+		#	print "[unable find word in dict]={}=".format(curr.encode("utf-8"))
+	if not res:
+		res = [word.decode("utf-8")]
+	#[i.decode("utf-8") for i in all_possibilities if i.decode("utf-8") in yoruba_dictionary]
+	#filter(lambda x : x in yoruba_dictionary, all_possibilities)
+	return res
 
 
 
