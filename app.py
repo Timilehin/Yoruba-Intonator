@@ -4,29 +4,27 @@ from wtforms import StringField, RadioField
 from wtforms.validators import InputRequired
 from wtforms.widgets import TextArea
 
-#from char_model.char_model import intonate
-from char_model.char_model import intonate
+from char_model.char_model import get_intonator
 
 from flask_bootstrap import Bootstrap
 import viterbi
 
 app = Flask(__name__)
 app.config['SECRET_KEY']= 'THIS IS A SECRET!'
+app.config['DEBUG'] = False
 bootstrap = Bootstrap(app)
-
+char_intonator = get_intonator()
 
 class LoginForm(FlaskForm):
 	model = RadioField('What model to use?', coerce=str, choices=[('word','word based model'),('char','char based model')])
 	unmarked_yoruba = StringField('Unmarked Yoruba: ', validators=[InputRequired()],  widget=TextArea())
-
-
 
 @app.route('/', methods=['GET', 'POST'])
 def form():
 	form = LoginForm()
 	if form.validate_on_submit():
 		if form.model.data == 'char':
-			translated_sentence = intonate(form.unmarked_yoruba.data)
+			translated_sentence = char_intonator(form.unmarked_yoruba.data)
 		if form.model.data == 'word':
 			translated_sentence = viterbi.get_most_likely_sentence_markings(form.unmarked_yoruba.data)
 

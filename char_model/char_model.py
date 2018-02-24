@@ -1,10 +1,14 @@
 import anago 
 
-def intonate(sentence):
+def get_intonator():
 	model = anago.Sequence()
 	model = model.load("char_model/best_model")
-	resp = model.analyze(list(sentence))
-	return marked_output(resp)
+	model.model.model._make_predict_function()
+	def intonator(sentence):
+		chars= list(sentence)
+		resp = model.analyze(chars)
+		return marked_output(resp)
+	return intonator
 
 def marked_output(json_output):
 	#takes in the json output from the character model 
