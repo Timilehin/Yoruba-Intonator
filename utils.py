@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
-
+import collections
 import os
 import urllib2
 from itertools import chain
@@ -45,3 +45,34 @@ def sentencifier(input_filepath, output_filepath):
 		with open (output_filepath, "w+") as o:
 			for line in sents:
 				o.writeline(line)
+
+def get_all_pairs(words): 
+	#TODO(timifasubaa):rename to get_semantic_bigram_pairs
+	#given a sentence, return all the pairs of words in the sentence
+	result = []
+	def all_pairs_helper(left_word, remaining_words):
+		for right_word in remaining_words: 
+			result.append([left_word, right_word])
+	for i in range(len(words)):
+		all_pairs_helper(words[i],words[i+1:])
+	return result
+
+assert get_all_pairs(["a", "b", "c"]) == [['a', 'b'], ['a', 'c'], ['b', 'c']]
+
+def line_cleaner(line):
+	#This function removes unnecessary embellishments so out bigram model is more effective.
+	result = []
+	bad_chars = [".", ",", ":"]
+	for word in line:
+		word = lower_case(word.translate(None, '.,:;-()\'\"\"'))
+		result.append(word)
+	return result
+
+
+def get_bigram_pairs(sentence):
+	#returns a counter containing bigram frequencies.
+	bigram = collections.Counter()
+	for i in range(len(sentence)-1):
+		bigram[(sentence[i], sentence[i+1])] += 1
+	#print bigram
+	return bigram

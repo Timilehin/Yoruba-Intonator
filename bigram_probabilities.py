@@ -10,7 +10,7 @@ def get_bigram_distribution():
 	#Takes in bigrams of the form a,b,2 ... a,c,3 and returns counts of the form {'a':[('b', 2), ('c', 3)]}
 	word_mappings = {}
 
-	file = open("data/bigram_data.txt","r")
+	file = open("bigram_data.txt","r")
 	for line in file:
 		w1, w2, freq = line.split(",")
 		if w1 not in word_mappings:
@@ -24,33 +24,27 @@ def get_probability_distribution(word, nexts_and_counts):
 	#{(a,b):2/5, (a, c):3/5}
 	total = 0
 	result = {}
-	#print nexts_and_counts
+	#get total and st counts
 	for w2, count in nexts_and_counts:
-		#print count,"---"
 		count = int(count.strip())
 		total += count
 		result[(word, w2)] = count
 
+	# divide to get probability
 	for w2, count in nexts_and_counts:
-		count = int(count.strip())
 		result[(word, w2)] /= total
-	#get all the words now and make their p
 	return result
 
+def generate_bigram_probabilities():
+	bigram_prob_file = open("bigram_probabilities.txt","w")
 
-bigram_prob_file = open("data/bigram_probabilities.txt","w")
+	bigram_distribution = get_bigram_distribution()
+	for distribution in bigram_distribution.items():
+		pair_probabilities = get_probability_distribution(distribution[0], distribution[1])
+		for pair, probability in pair_probabilities.items():
+			bigram_prob_file.write("{},{},{}\n".format(pair[0], pair[1], probability))
 
-bigram_distribution = get_bigram_distribution()
-for distribution in bigram_distribution.items():
-	pair_probabilities = get_probability_distribution(distribution[0], distribution[1])
-	for pair, probability in pair_probabilities.items():
-		#print pair
-		#print probability
-		bigram_prob_file.write(pair[0]+","+pair[1]+","+str(probability)+"\n")
-
-bigram_prob_file.close()
-
-#write a function that takes in word, [follower, count] and returns 
+	bigram_prob_file.close()
 
 """ only uncomment this if you want to use bigram_probabilities from the command line. 
 TODO(timifasubaa):refactor to make user able to select what service to use from cmdline flag
