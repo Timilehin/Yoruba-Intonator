@@ -14,7 +14,7 @@ Then make the mapping from word to (word, score, ()) and (word, 1, (prev_word1,p
 You keep going higher on the array levels. For each new level, for each item in the array, we check the immediate past and for each item there we want to find the product of their score and the probability of the pair of them followed by me. Then we will choose the maximum of these and makeit our value. 
 """
 
-def get_probability_distributions():
+def get_bigram_probabilities():
 	probability_pairs = {}
 	filename = "data/bigram_probabilities.txt"
 	file = open(filename, "r")
@@ -30,7 +30,7 @@ def get_probability_distributions():
 	print probability_pairs.items()[0]
 	return probability_pairs
 
-bigram_probabilities = get_probability_distributions()
+bigram_probabilities = get_bigram_probabilities()
 contextual_bigram_freqs = contextual_bigram_generator.get_contextual_bigram_frequencies()
 
 def get_most_likely_sentence_markings(sentence):
@@ -38,8 +38,8 @@ def get_most_likely_sentence_markings(sentence):
 	sentence = sentence.split()
 	sentence = map(lambda x : x.lower().translate(None, '.,:;-()\'\"\"'), sentence)
 	all_word_possibliities = map(lambda x: intonator.get_verified_possibilities(x), sentence)
-	print"===="
-	print all_word_possibliities
+	# print"===="
+	# print all_word_possibliities
 
 	Node = collections.namedtuple("Node", "word, score, so_far")
 	for i in range(len(all_word_possibliities)):
@@ -56,13 +56,9 @@ def get_most_likely_sentence_markings(sentence):
 			for prev_node_pos in range(len(all_word_possibliities[layer-1])):
 				#compute the max productof all the combinations of the lower to the higher? 
 				prev_node=all_word_possibliities[layer-1][prev_node_pos]
-				print(type(curr_node.word))
+				# print(type(curr_node.word))
 				a=unicodedata.normalize('NFD', prev_node.word)
-				#print curr_node.word
-				#print "?????"
 				b=unicodedata.normalize('NFD', curr_node.word)
-				#print a
-				#print b
 				bigram_prob = float(bigram_probabilities[(a, b)])\
 					if (a, b) in bigram_probabilities else 0
 				#print bigram_prob,"is the probability of ",prev_node.word,curr_node.word
@@ -80,12 +76,6 @@ def get_most_likely_sentence_markings(sentence):
 				if score > max_val or not max_node:
 					max_val = score
 					max_node = prev_node
-			#print "!!"*
-			#print curr_node*
-			#print max_node*
-			#print max_val*
-			#print "!!"*
-
 			all_word_possibliities[layer][curr_node_pos] = Node(curr_node.word, max_val, max_node.so_far + [curr_node.word])
 
 	#print all_word_possibliities
@@ -99,7 +89,6 @@ def get_most_likely_sentence_markings(sentence):
 		#for prediction in final_layer:
 		#	print prediction.score, " ".join(prediction.so_far)
 	else:
-		#print "Sorry, I don't have any predictions. My model is still improving I'll soon be able to give a better answer"
 		return None#" ".join(sentence)
 
 	#print "There are {0} verified possibilities".format(len(verified_words))
