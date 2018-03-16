@@ -11,7 +11,6 @@ import viterbi
 
 app = Flask(__name__)
 app.config['SECRET_KEY']= 'THIS IS A SECRET!'
-app.config['DEBUG'] = False
 bootstrap = Bootstrap(app)
 char_intonator = get_intonator()
 
