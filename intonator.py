@@ -6,6 +6,7 @@ import counter
 import dictionary_generator
 import transformations
 import unicodedata
+import utils
 
 def get_word_generator(possibilities_per_position):
 	def word_generator(number):
@@ -37,7 +38,7 @@ def get_all_possibilities(word):
 	return all_possibilities
 
 	
-yoruba_dictionary = dictionary_generator.get_yoruba_dictionary()
+yoruba_dictionary = utils.get_yoruba_dictionary()
 eng_to_readablechars = transformations.all_accent_transformations()
 
 def get_verified_possibilities(word):

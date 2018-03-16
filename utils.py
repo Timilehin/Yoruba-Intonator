@@ -74,5 +74,15 @@ def get_bigram_pairs(sentence):
 	bigram = collections.Counter()
 	for i in range(len(sentence)-1):
 		bigram[(sentence[i], sentence[i+1])] += 1
-	#print bigram
 	return bigram
+
+def get_yoruba_dictionary():
+	#load the words in the dictionary into a set 
+	yoruba_words = set() 
+	filename = "data/dictionary.txt"#replace with the name of your dictionary of yoruba words.
+	file = open(filename, "r")
+	for line in file:
+		#print line
+		item = unicodedata.normalize('NFD', line.strip().decode("utf-8")) 
+  		yoruba_words.add(item)
+  	return yoruba_words
