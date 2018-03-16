@@ -1,5 +1,6 @@
 import collections
 import utils
+import nltk
 
 
 def generate_bigram(filename, contextual_bigram=True):
@@ -14,13 +15,13 @@ def generate_bigram(filename, contextual_bigram=True):
 
 	for f_line in file:
 		line = f_line.split()
-		clean_line = utils.line_cleaner(line)
-
-		bigram_freq += utils.get_bigram_pairs(clean_line)
+		bigrams = nltk.ngrams(line, 2)
+		for gram in bigrams:
+			bigram_freq[gram] += 1
 
 		#semantic_bigram
 		if contextual_bigram:
-			all_pairs = utils.get_all_pairs(clean_line)
+			all_pairs = utils.get_all_pairs(line)
 			for pair in all_pairs:
 				pair.sort()
 				semantic_bigram_freq[tuple(pair)] += 1
